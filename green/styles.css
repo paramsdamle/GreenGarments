@@ -1,0 +1,16 @@
+body {
+  /* background-color: #003309; */
+  background-image: linear-gradient(#003309, black);
+  color: seashell;
+  min-width: 300px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  /* border-radius: 25px; */
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
