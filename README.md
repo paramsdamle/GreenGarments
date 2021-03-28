@@ -1,5 +1,7 @@
 # GreenGarments
 
+## [Watch the Video Demo!](https://youtu.be/RS7-4FMJS30)
+
 ## Inspiration
 
 **The fashion industry is the second largest polluter in the world, only superseded by _oil_.** I didn't know anything about the sustainability of the clothes I bought, and I realized there's a vacancy when it comes to services that mitigate ignorance about one's shopping. The best way to combat this is raising awareness and accessibility to healthier alternatives to fast fashion, and _Green Garments_ does just that: influence small-scale decision making that triggers large-scale change.
@@ -32,3 +34,5 @@ There's a **huge** potential for _Green Garments_ because of increasing environm
 
 Download the code to your computer from GitHub. Open Google Chrome and by clicking the ≡ in the top right, navigate to `More Tools -> Extensions`.
 Make sure `Developer mode` (switch on top right) is turned on, click `Load unpacked`, and select the `green` folder. The extension should now load and you can view sustainability reports on major fashion websites.
+
+![Green Garments Logo](https://github.com/paramsdamle/GreenGarments/blob/main/green/logo-green.png)
