@@ -6,11 +6,119 @@ body {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 20px;
   /* border-radius: 25px; */
+  font-family: "Fira Sans", sans-serif;
 }
-img {
+div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 5px;
 }
+button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Fira Sans", sans-serif;
+}
+a {
+  color: #b9faca;
+}
+
+.leaf {
+  filter: grayscale(80%);
+}
+
+.rating {
+  /* float: left; */
+  border: 0px;
+  /* padding-left: 100px; */
+  padding-right: 83px;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+  clip: rect(0, 0, 0, 0);
+}
+
+.rating:not(:checked) > img {
+  float: right;
+  width: 1em;
+  padding: 0 0.1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 200%;
+  /* line-height: 1.2; */
+  /* color: #ddd; */
+  /* text-shadow: 1px 1px #bbb, 2px 2px #666, 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.5); */
+}
+
+.rating:not(:checked) > img:before {
+  /* content: "A"; */
+  filter: grayscale(80%);
+}
+
+.rating > input:checked > img {
+  /* color: #f70; */
+  filter: grayscale(0%);
+  /* text-shadow: 1px 1px #c60, 2px 2px #940, 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.5); */
+}
+
+.rating:not(:checked) > img:hover,
+.rating:not(:checked) > img:hover ~ img {
+  /* color: gold; */
+  /* text-shadow: 1px 1px goldenrod, 2px 2px #b57340,
+    0.1em 0.1em 0.2em rgba(0, 0, 0, 0.5); */
+  filter: grayscale(0%);
+}
+
+.rating > input:checked + img:hover,
+.rating > input:checked + img:hover ~ img,
+.rating > input:checked ~ img:hover,
+.rating > input:checked ~ img:hover ~ img,
+.rating > img:hover ~ input:checked ~ img {
+  /* color: #ea0;
+  text-shadow: 1px 1px goldenrod, 2px 2px #b57340,
+    0.1em 0.1em 0.2em rgba(0, 0, 0, 0.5); */
+  filter: grayscale(00%);
+}
+
+.rating > img:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+/* end of Lea's code */
+
+/*
+ * Clearfix from html5 boilerplate
+ */
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+/* .clearfix {
+  *zoom: 1;
+} */

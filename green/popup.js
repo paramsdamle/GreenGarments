@@ -1,3 +1,5 @@
+// var bkg = chrome.extension.getBackgroundPage();
+
 document.addEventListener('DOMContentLoaded', function (){
     
     curated_lists = [ // site name, site link, list name, list of brands
@@ -30,16 +32,75 @@ document.addEventListener('DOMContentLoaded', function (){
         }
     ] 
     
-    
+    // chrome.tabs.query({currentWindow: true, active: true}, 
+    //     function (tabs) {
+    //         let url = tabs[0].url;
+    //         console.log(url);
+    //     }
+    // )
     
     document.querySelector('button').addEventListener('click', onclick, false)
 
     function onclick (){
         chrome.tabs.query({currentWindow: true, active: true}, 
             function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, 'hi', setCount)
+                let url = tabs[0].url;
+                domain = (url.match(/[a-zA-Z0-9]+\.(com|net|org|co|co\.uk|com\.au|london)(?![\.a-zA-z0-9])/gi))[0].toLowerCase();
+
+
+                // const div = document.createElement('div');
+                domainname = document.getElementById('domainname');
+                
+
+                let reportFound = false;
+                siteReport = document.getElementById('siteRating');
+                for (var i = 0; i < curated_lists.length; i++){
+                    editorial = curated_lists[i];
+                    if(editorial.brands.includes(domain)){
+                        if( ! reportFound){
+                            domainname.innerHTML = `Sustainability report for <b>${domain}</b>:`;
+                        }
+                        reportFound = true;
+                        siteReport.innerHTML += `<div><b>${editorial.sitename}</b> placed this site at position ${editorial.brands.indexOf(domain)+1} in their list, <a href="${editorial.sitelink}">"${editorial.pagename}"</a></div>`;
+                    }
+                }
+                userReport = document.getElementById('userRating');
+                if(!reportFound){
+                    userReport.innerHTML = `Hmm, it seems like we couldn't find a report for <b>${domain}</b>. Would you like to submit a user rating below?`
+                }
+                else {
+                    userReport.innerHTML = `Help other shoppers by submitting your review of <b>${domain}</b>'s sustainability!`
+                }
+
+                fivestar = document.createElement('div');
+                fivestar.innerHTML = `<form id="ratingForm">
+        <fieldset class="rating">
+            <input type="radio" id="leaf5" name="rating" value="5">
+            <img src="leaf-on.png" id="leaf5" style="width:20px;height:20px;" class="leaf"/> 
+            <label for="leaf5" title="Would Recommend!"></label></input>
+            <input type="radio" id="leaf4" name="rating" value="4">
+            <img src="leaf-on.png" id="leaf4" style="width:20px;height:20px;" class="leaf"/> 
+            <label for="leaf4" title="Ethical and Reputable"></label></input>
+            <input type="radio" id="leaf3" name="rating" value="3">
+            <img src="leaf-on.png" id="leaf3" style="width:20px;height:20px;" class="leaf"/>
+            <label for="leaf3" title="Average"></label></input>
+            <input type="radio" id="leaf2" name="rating" value="2">
+            <img src="leaf-on.png" id="leaf2" style="width:20px;height:20px;" class="leaf"/> 
+            <label for="leaf2" title="Sub-optimal Choice"></label></input>
+            <input type="radio" id="leaf1" name="rating" value="1">
+            <img src="leaf-on.png" id="leaf1" style="width:20px;height:20px;" class="leaf"/> 
+            <label for="leaf1" title="Avoid this Brand!"></label></input>
+        </fieldset>
+    </form>`;
+                document.body.appendChild(fivestar);
+
+                // div.textContent = `Sustainability rating for ${domain}:`;
+                // document.body.appendChild(div);
+                // bkg.console.log(url);
+                // chrome.tabs.sendMessage(tabs[0].id, 'hi', setCount)
             }
         )
+        // bkg.console.log("Got here")
     }
 
     function setCount(res){
@@ -47,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function (){
         div.textContent = `${res.count} cotton`;
         document.body.appendChild(div);
     }
+
     // const bg = chrome.extension.getBackgroundPage()
     // Object.keys(bg.cottons).forEach(function (url) {
     //     const div = document.createElement('div')
