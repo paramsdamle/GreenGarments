@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     // var matches = document.documentElement.innerHTML.match(re);
     var matches1 = document.documentElement.innerHTML.match(/[0-9]+%[a-z0-9 ]*(cotton|polyester|nylon|linen|hemp|tencel|silk|leather|wool)/gi);
     var matches2 = document.documentElement.innerHTML.match(/(cotton|polyester|nylon|linen|hemp|tencel|silk|leather|wool)/gi);
-    sendResponse({ materials: matches1.concat(matches2)});
+    sendResponse({ materials: matches1.concat(matches2) ?? []});
     // return true;
 })
 
