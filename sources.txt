@@ -1,0 +1,5 @@
+For the base chrome extension:
+https://github.com/shama/letswritecode/tree/master/how-to-make-chrome-extensions
+
+For the rating system:
+http://jsfiddle.net/ashuslove/zLm4f/6/

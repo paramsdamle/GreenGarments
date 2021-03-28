@@ -6,13 +6,14 @@ body {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 20px;
+  padding: 7px 20px 7px 20px;
   /* border-radius: 25px; */
   font-family: "Fira Sans", sans-serif;
+  font-size: 14pt;
 }
 div {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .logo {
   display: block;
@@ -20,11 +21,52 @@ div {
   margin-right: auto;
   margin-bottom: 5px;
 }
-button {
+.button {
+  height: 30px;
+  width: 220px;
   margin-top: 10px;
   margin-bottom: 10px;
   font-family: "Fira Sans", sans-serif;
+  font-size: 13pt;
+  border: 0px;
+  border-radius: 3px;
+  background-color: #005c27;
+  color: white;
+  transition: all 0.5s;
+  cursor: pointer;
 }
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 20px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(8px);
+}
+
 a {
   color: #b9faca;
 }
@@ -33,11 +75,16 @@ a {
   filter: grayscale(80%);
 }
 
+.smallerText {
+  font-size: 12pt;
+  color: #d8e6dc;
+}
+
 .rating {
   /* float: left; */
   border: 0px;
   /* padding-left: 100px; */
-  padding-right: 83px;
+  padding-right: 55px;
 }
 
 /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 

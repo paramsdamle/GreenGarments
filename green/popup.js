@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function (){
 
                 let reportFound = false;
                 siteReport = document.getElementById('siteRating');
+                siteReport.innerHTML = "";
                 for (var i = 0; i < curated_lists.length; i++){
                     editorial = curated_lists[i];
                     if(editorial.brands.includes(domain)){
@@ -64,40 +65,46 @@ document.addEventListener('DOMContentLoaded', function (){
                         siteReport.innerHTML += `<div><b>${editorial.sitename}</b> placed this site at position ${editorial.brands.indexOf(domain)+1} in their list, <a href="${editorial.sitelink}">"${editorial.pagename}"</a></div>`;
                     }
                 }
+
+
+                // div.textContent = `Sustainability rating for ${domain}:`;
+                // document.body.appendChild(div);
+                // bkg.console.log(url);
+                chrome.tabs.sendMessage(tabs[0].id, 'hi', setPageReportHTML)
+
+                
+
+
                 userReport = document.getElementById('userRating');
                 if(!reportFound){
-                    userReport.innerHTML = `Hmm, it seems like we couldn't find a report for <b>${domain}</b>. Would you like to submit a user rating below?`
+                    userReport.innerHTML = `It seems like we couldn't find a report for <b>${domain}</b>. Would you like to submit a user rating below?`
                 }
                 else {
                     userReport.innerHTML = `Help other shoppers by submitting your review of <b>${domain}</b>'s sustainability!`
                 }
 
-                fivestar = document.createElement('div');
+                fivestar = document.getElementById('fivestar')
                 fivestar.innerHTML = `<form id="ratingForm">
         <fieldset class="rating">
             <input type="radio" id="leaf5" name="rating" value="5">
-            <img src="leaf-on.png" id="leaf5" style="width:20px;height:20px;" class="leaf"/> 
+            <img src="leaf-on.png" id="leaf5" style="width:30px;height:30px;" class="leaf"/> 
             <label for="leaf5" title="Would Recommend!"></label></input>
             <input type="radio" id="leaf4" name="rating" value="4">
-            <img src="leaf-on.png" id="leaf4" style="width:20px;height:20px;" class="leaf"/> 
+            <img src="leaf-on.png" id="leaf4" style="width:30px;height:30px;" class="leaf"/> 
             <label for="leaf4" title="Ethical and Reputable"></label></input>
             <input type="radio" id="leaf3" name="rating" value="3">
-            <img src="leaf-on.png" id="leaf3" style="width:20px;height:20px;" class="leaf"/>
+            <img src="leaf-on.png" id="leaf3" style="width:30px;height:30px;" class="leaf"/>
             <label for="leaf3" title="Average"></label></input>
             <input type="radio" id="leaf2" name="rating" value="2">
-            <img src="leaf-on.png" id="leaf2" style="width:20px;height:20px;" class="leaf"/> 
+            <img src="leaf-on.png" id="leaf2" style="width:30px;height:30px;" class="leaf"/> 
             <label for="leaf2" title="Sub-optimal Choice"></label></input>
             <input type="radio" id="leaf1" name="rating" value="1">
-            <img src="leaf-on.png" id="leaf1" style="width:20px;height:20px;" class="leaf"/> 
+            <img src="leaf-on.png" id="leaf1" style="width:30px;height:30px;" class="leaf"/> 
             <label for="leaf1" title="Avoid this Brand!"></label></input>
         </fieldset>
     </form>`;
-                document.body.appendChild(fivestar);
 
-                // div.textContent = `Sustainability rating for ${domain}:`;
-                // document.body.appendChild(div);
-                // bkg.console.log(url);
-                // chrome.tabs.sendMessage(tabs[0].id, 'hi', setCount)
+
             }
         )
         // bkg.console.log("Got here")
@@ -107,6 +114,36 @@ document.addEventListener('DOMContentLoaded', function (){
         const div = document.createElement('div');
         div.textContent = `${res.count} cotton`;
         document.body.appendChild(div);
+    }
+
+    function setPageReportHTML(res){
+        pageReport = document.getElementById('pageRating');
+        // pageReport.innerHTML = JSON.stringify(res);
+        already_checked = []
+        material_rating = {
+            'cotton': 'If organic, cotton has natural fibers, no pesticides or chemicals, is biodegradable, wicks away sweat, and is breathable/soft. However, farming requires a lot of water.',
+            'polyester': 'Although it requires less water and is cheaper, polyester is produced with toxic chemicals very harmful to us and the planet, involve high nonrenewable energy consumption, and are not biodegradable.',
+            'nylon': 'Nylon is a poor choice material due to being produced with chemicals harmful to us and the planet, being non-biodegradable, and requiring acid dying and nitrous oxide, a greenhouse gas.',
+            'linen': 'Although linen uses a lot of water and wrinkles easily, it is made from natural fibers, no pesticides, and is biodegradable, lightweight, and breathable.',
+            'hemp': 'Although it must be imported into the US for now, hemp is great due to its biodegradability, no pesticide use, medium water requirement, and machine washability.',
+            'tencel': 'Tencel uses natural fibers and sustainably harvested wood, making it a great biodegradable, anti-bacterial, machine washable option. Its chemical usage is mitigated by the chemical recycling used in production.',
+            'silk': 'Silk uses natural fibers, is biodegradable, and lighter on water than cotton. However, unless it\'s vegan silk, chances are silk worms are killed in the process.',
+            'leather': 'Leather is not very sustainable and cattle farming has an immense effect on global carbon dioxide emissions. Try to avoid non-vegan leather whenever possible.',
+            'wool': 'Wool, by being animal derived, has the risk of coming from unethical or unsustainable sources. Check on the specific origin of the wool to determine its sutainability.',
+        }
+        for(var i = 0; i < res.materials.length; i++){
+            page = document.getElementById('pageName')
+            page.innerHTML = "Materials in this garment:"
+            pure_material = res.materials[i].match(/(cotton|polyester|nylon|linen|hemp|tencel|silk|leather|wool)/i)[0].toLowerCase();
+            if(! already_checked.includes(pure_material)){
+                already_checked.push(pure_material);
+                pageReport.innerHTML += `<div>${res.materials[i]}: ${material_rating[pure_material]}</div>`
+            }
+            // pageReport.innerHTML = res.materials[i];
+        }
+        // pageReport.innerHTML += res.count;
+        
+        // pageReport.innerHTML += res.materials;
     }
 
     // const bg = chrome.extension.getBackgroundPage()
